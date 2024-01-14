@@ -1,11 +1,11 @@
 import csv
 import pandas as pd
 
-def limpiar_archivo_texto(archivo_entrada, archivo_salida, archivo_errores):
-    with open(archivo_entrada, 'r', encoding='utf-8') as entrada, \
-         open(archivo_salida, 'w', encoding='utf-8') as salida, \
-         open(archivo_errores, 'w', encoding='utf-8') as errores:
 
+def limpiar_archivo_texto(archivo_entrada, archivo_salida, archivo_errores):
+    with open(archivo_entrada, "r", encoding="utf-8") as entrada, open(
+        archivo_salida, "w", encoding="utf-8"
+    ) as salida, open(archivo_errores, "w", encoding="utf-8") as errores:
         num_linea = 0
 
         for linea in entrada:
@@ -15,16 +15,16 @@ def limpiar_archivo_texto(archivo_entrada, archivo_salida, archivo_errores):
                 salida.write(linea)
             else:
                 # Guardar la línea errónea en el archivo de errores
-                errores.write(f'Error en la línea {num_linea}: {linea}')
+                errores.write(f"Error en la línea {num_linea}: {linea}")
 
 
 def unificar_comas(archivo_entrada, archivo_salida):
-    with open(archivo_entrada, 'r', encoding='utf-8') as entrada, \
-         open(archivo_salida, 'w', encoding='utf-8') as salida:
-
+    with open(archivo_entrada, "r", encoding="utf-8") as entrada, open(
+        archivo_salida, "w", encoding="utf-8"
+    ) as salida:
         for linea in entrada:
             # Contar la cantidad de comas en la línea
-            cantidad_comas = linea.count(',')
+            cantidad_comas = linea.count(",")
 
             if cantidad_comas != 12:
                 # Calcular la cantidad de comas que faltan o sobran
@@ -35,7 +35,7 @@ def unificar_comas(archivo_entrada, archivo_salida):
                     nueva_linea = f'{linea.strip()}{"," * diferencia_comas}\n'
                 elif diferencia_comas < 0:
                     # Quitar comas del final de la línea
-                    nueva_linea = ','.join(linea.strip().rsplit(',', 12)[:12]) + '\n'
+                    nueva_linea = ",".join(linea.strip().rsplit(",", 12)[:12]) + "\n"
             else:
                 nueva_linea = linea
 
@@ -48,12 +48,12 @@ def limpiar_csv_final(archivo_entrada, archivo_salida):
     df = pd.read_csv(archivo_entrada, header=None)
 
     # Eliminar columnas vacías
-    df = df.dropna(axis=1, how='all')
+    df = df.dropna(axis=1, how="all")
 
     # Verificar si hay nombres de columna ya existentes
     if all(str(col).isdigit() for col in df.columns):
         # Si todas las columnas son números, agregar encabezado genérico
-        encabezado = [f'col{i+1}' for i in range(len(df.columns))]
+        encabezado = [f"col{i+1}" for i in range(len(df.columns))]
         df.columns = encabezado
 
     # Eliminar registros duplicados
@@ -64,23 +64,21 @@ def limpiar_csv_final(archivo_entrada, archivo_salida):
 
 
 if __name__ == "__main__":
+    archivo_entrada = "full_data_pages.csv"
+    archivo_salida = "full_data_pages_fixed.csv"
 
-    archivo_entrada = 'full_data_pages.csv'
-    archivo_salida = 'full_data_pages_fixed.csv'
+    archivo_salida_unificado = "full_data_pages_fixed_lines.csv"
 
-    archivo_salida_unificado = 'full_data_pages_fixed_lines.csv'
+    archivo_errores = "full_data_pages_errors.csv"
 
-    archivo_errores = 'full_data_pages_errors.csv'
-
-    archivo_salida_csv = 'final_data.csv'
-    archivo_salida_csv2 = 'final_data2.csv'
+    archivo_salida_csv = "final_data.csv"
+    archivo_salida_csv2 = "final_data2.csv"
 
     limpiar_archivo_texto(archivo_entrada, archivo_salida, archivo_errores)
     print("Proceso 1 completado de length clean.")
 
     unificar_comas(archivo_salida, archivo_salida_unificado)
     print("Proceso 2 de unificación de comas")
-
 
     ## test2
     limpiar_csv_final(archivo_salida_unificado, archivo_salida_csv2)
