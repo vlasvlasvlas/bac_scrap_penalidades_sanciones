@@ -55,6 +55,9 @@ venv\Scripts\activate  # Para sistemas Windows
 4. **Documentación Adicional:**
     - Ampliar la documentación en el código fuente para facilitar la comprensión y mantenimiento del código en el futuro.
 
+5. **Descarga de Novedades:**
+    - Implementar una funcionalidad que permita descargar únicamente las novedades desde el portal, evitando la descarga de páginas ya procesadas. Esto contribuirá a la eficiencia del proceso y a la gestión de datos actualizados.
+
 Recuerda revisar y adaptar los scripts según tus necesidades específicas antes de ejecutarlos.
 
 ¡Esperamos que estos scripts te sean de utilidad! Si tienes sugerencias o encuentras áreas de mejora, no dudes en contribuir o compartir tus ideas. ¡Gracias por utilizar este recurso!
